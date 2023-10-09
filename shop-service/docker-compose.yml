@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+
+  db-init:
+    image: postgres:12.4
+    container_name: db-init-container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+      POSTGRES_DB: coffee_shop
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  spring-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: my-shop-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db-init
+

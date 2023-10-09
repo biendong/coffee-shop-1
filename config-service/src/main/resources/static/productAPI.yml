@@ -1,0 +1,665 @@
+openapi: 3.0.0
+
+info:
+  title: My Banyan - Primary endpoints
+  description: My Banyan
+  version: 1.0.0
+  contact:
+    name: Example
+    email: example@example.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: '{server}/product-service/rs/v1'
+    variables:
+      server:
+        default: https://localhost:8082
+        enum:
+          - https://localhost:8082
+
+paths:
+  /airTravelClearances:
+    get:
+      tags:
+        - AirTravelClearance
+      description: Get list of air Travel Clearances
+      summary: Get list of air Travel Clearances
+      parameters:
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/xApiKey"
+        - $ref: "#/components/parameters/shared"
+        - $ref: "#/components/parameters/sharingUid"
+      responses:
+        200:
+          description: The list of air Travel Clearances
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AirTravelClearanceResponses"
+          headers:
+            Access-Control-Allow-Headers:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Expose-Headers:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/headers/ControlHeaders"
+            Cache-Control:
+              $ref: "#/components/headers/ControlHeaders"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/InternalError"
+      security:
+        - GoBanyanAuthorizer: []
+          api_key: []
+      x-amazon-apigateway-integration:
+        type: http
+        passthroughBehavior: "when_no_match"
+        httpMethod: GET
+        uri: http://${stageVariables.apiLink}/api/v1/airTravelClearances
+        connectionType: "VPC_LINK"
+        connectionId: ${stageVariables.vpcLinkId}
+        requestParameters:
+          integration.request.header.Access-Control-Allow-Headers: "'*'"
+          integration.request.header.Access-Control-Allow-Origin: "'*'"
+          integration.request.header.Authorization: method.request.header.Authorization
+          integration.request.header.x-api-key: method.request.header.x-api-key
+          integration.request.querystring.shared: method.request.querystring.shared
+          integration.request.querystring.sharingUid: method.request.querystring.sharingUid
+        responses:
+          200:
+            statusCode: 200
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+          400:
+            statusCode: 400
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+          404:
+            statusCode: 404
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+          500:
+            statusCode: 500
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+    post:
+      tags:
+        - AirTravelClearance
+      description: Create new air Travel Clearance
+      summary: Create new air Travel Clearance
+      parameters:
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/xApiKey"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AirTravelClearanceRequest"
+      responses:
+        201:
+          description: Create air Travel Clearance successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AirTravelClearanceResponse"
+          headers:
+            Access-Control-Allow-Headers:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Expose-Headers:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/headers/ControlHeaders"
+            Cache-Control:
+              $ref: "#/components/headers/ControlHeaders"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/InternalError"
+      security:
+        - GoBanyanAuthorizer: []
+          api_key: []
+      x-amazon-apigateway-integration:
+        type: http
+        passthroughBehavior: "when_no_match"
+        httpMethod: POST
+        uri: http://${stageVariables.apiLink}/api/v1/airTravelClearances
+        connectionType: "VPC_LINK"
+        connectionId: ${stageVariables.vpcLinkId}
+        requestParameters:
+          integration.request.header.Access-Control-Allow-Headers: "'*'"
+          integration.request.header.Access-Control-Allow-Origin: "'*'"
+          integration.request.header.Authorization: method.request.header.Authorization
+          integration.request.header.x-api-key: method.request.header.x-api-key
+        responses:
+          201:
+            statusCode: 201
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+          400:
+            statusCode: 400
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+          404:
+            statusCode: 404
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+          500:
+            statusCode: 500
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+    options:
+      tags:
+        - AirTravelClearance
+      summary: CORS support
+      description: Enable CORS by returning correct headers
+      parameters: []
+      responses:
+        200:
+          description: Default response for CORS method
+          headers:
+            Access-Control-Allow-Headers:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Expose-Headers:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/headers/ControlHeaders"
+            Cache-Control:
+              $ref: "#/components/headers/ControlHeaders"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        requestTemplates:
+          application/json: "{\n  \"statusCode\" : 201\n}\n"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST,PUT'"
+              method.response.header.Access-Control-Allow-Headers: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            responseTemplates:
+              application/json: "{}\n"
+  /airTravelClearances/{id}:
+    get:
+      tags:
+        - AirTravelClearance
+      description: Get air Travel Clearance by id
+      summary: Get air Travel Clearance by id
+      parameters:
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/xApiKey"
+        - $ref: "#/components/parameters/objectId"
+        - $ref: "#/components/parameters/shared"
+        - $ref: "#/components/parameters/sharingUid"
+      responses:
+        200:
+          description: The air Travel Clearances by id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AirTravelClearanceResponse"
+          headers:
+            Access-Control-Allow-Headers:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Expose-Headers:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/headers/ControlHeaders"
+            Cache-Control:
+              $ref: "#/components/headers/ControlHeaders"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/InternalError"
+      security:
+        - GoBanyanAuthorizer: []
+          api_key: []
+      x-amazon-apigateway-integration:
+        type: http
+        passthroughBehavior: "when_no_match"
+        httpMethod: GET
+        uri: http://${stageVariables.apiLink}/api/v1/airTravelClearances/{id}
+        connectionType: "VPC_LINK"
+        connectionId: ${stageVariables.vpcLinkId}
+        requestParameters:
+          integration.request.header.Access-Control-Allow-Headers: "'*'"
+          integration.request.header.Access-Control-Allow-Origin: "'*'"
+          integration.request.header.Authorization: method.request.header.Authorization
+          integration.request.header.x-api-key: method.request.header.x-api-key
+          integration.request.path.id: method.request.path.id
+          integration.request.querystring.shared: method.request.querystring.shared
+          integration.request.querystring.sharingUid: method.request.querystring.sharingUid
+        responses:
+          200:
+            statusCode: 200
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+          400:
+            statusCode: 400
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+          404:
+            statusCode: 404
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+          500:
+            statusCode: 500
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+    put:
+      tags:
+        - AirTravelClearance
+      description: Update a air Travel Clearance
+      summary: Update a air Travel Clearance
+      parameters:
+        - $ref: "#/components/parameters/Authorization"
+        - $ref: "#/components/parameters/xApiKey"
+        - $ref: "#/components/parameters/objectId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AirTravelClearanceRequest"
+      responses:
+        200:
+          description: The updated air Travel Clearance
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AirTravelClearanceResponse"
+          headers:
+            Access-Control-Allow-Headers:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Expose-Headers:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/headers/ControlHeaders"
+            Cache-Control:
+              $ref: "#/components/headers/ControlHeaders"
+        400:
+          $ref: "#/components/responses/BadRequest"
+        404:
+          $ref: "#/components/responses/NotFound"
+        500:
+          $ref: "#/components/responses/InternalError"
+      security:
+        - GoBanyanAuthorizer: []
+          api_key: []
+      x-amazon-apigateway-integration:
+        type: http
+        passthroughBehavior: "when_no_match"
+        httpMethod: PUT
+        uri: http://${stageVariables.apiLink}/api/v1/airTravelClearances/{id}
+        connectionType: "VPC_LINK"
+        connectionId: ${stageVariables.vpcLinkId}
+        requestParameters:
+          integration.request.header.Access-Control-Allow-Headers: "'*'"
+          integration.request.header.Access-Control-Allow-Origin: "'*'"
+          integration.request.header.Authorization: method.request.header.Authorization
+          integration.request.header.x-api-key: method.request.header.x-api-key
+          integration.request.path.id: method.request.path.id
+        responses:
+          200:
+            statusCode: 200
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+          400:
+            statusCode: 400
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+          404:
+            statusCode: 404
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+          500:
+            statusCode: 500
+            responseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type, X-Amz-Date, Authorization, X-Api-Key,content-encoding'"
+              method.response.header.Access-Control-Allow-Methods: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+              method.response.header.Cache-Control: "'No-Cache'"
+    options:
+      tags:
+        - AirTravelClearance
+      summary: CORS support
+      description: Enable CORS by returning correct headers
+      parameters:
+        - $ref: "#/components/parameters/objectId"
+      responses:
+        200:
+          description: Default response for CORS method
+          headers:
+            Access-Control-Allow-Headers:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Expose-Headers:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Allow-Methods:
+              $ref: "#/components/headers/ControlHeaders"
+            Access-Control-Allow-Origin:
+              $ref: "#/components/headers/ControlHeaders"
+            Cache-Control:
+              $ref: "#/components/headers/ControlHeaders"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        requestTemplates:
+          application/json: "{\n  \"statusCode\" : 201\n}\n"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS,POST,PUT'"
+              method.response.header.Access-Control-Allow-Headers: "'*'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            responseTemplates:
+              application/json: "{}\n"
+components:
+  securitySchemes:
+    api_key:
+      type: "apiKey"
+      name: "x-api-key"
+      in: "header"
+    GoBanyanAuthorizer:
+      type: "apiKey"
+      name: "Authorization"
+      in: "header"
+      x-amazon-apigateway-authtype: "custom"
+      x-amazon-apigateway-authorizer:
+        authorizerCredentials: "arn:aws:iam::013666095363:role/${stageVariables.lambdaAuthorizerInvokeRole}"
+        authorizerUri: "arn:aws:apigateway:us-west-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-1:013666095363:function:${stageVariables.lambdaAuthorizer}-${stageVariables.lambdaAuthorizerAlias}/invocations"
+        authorizerResultTtlInSeconds: 0
+        identitySource: "method.request.header.Authorization"
+        type: "request"
+  headers:
+    ControlHeaders:
+      schema:
+        type: "string"
+  responses:
+    BadRequest:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      headers:
+        Access-Control-Allow-Headers:
+          $ref: "#/components/headers/ControlHeaders"
+        Access-Control-Expose-Headers:
+          $ref: "#/components/headers/ControlHeaders"
+        Access-Control-Allow-Methods:
+          $ref: "#/components/headers/ControlHeaders"
+        Access-Control-Allow-Origin:
+          $ref: "#/components/headers/ControlHeaders"
+        Cache-Control:
+          $ref: "#/components/headers/ControlHeaders"
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      headers:
+        Access-Control-Allow-Headers:
+          $ref: "#/components/headers/ControlHeaders"
+        Access-Control-Expose-Headers:
+          $ref: "#/components/headers/ControlHeaders"
+        Access-Control-Allow-Methods:
+          $ref: "#/components/headers/ControlHeaders"
+        Access-Control-Allow-Origin:
+          $ref: "#/components/headers/ControlHeaders"
+        Cache-Control:
+          $ref: "#/components/headers/ControlHeaders"
+    InternalError:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+      headers:
+        Access-Control-Allow-Headers:
+          $ref: "#/components/headers/ControlHeaders"
+        Access-Control-Expose-Headers:
+          $ref: "#/components/headers/ControlHeaders"
+        Access-Control-Allow-Methods:
+          $ref: "#/components/headers/ControlHeaders"
+        Access-Control-Allow-Origin:
+          $ref: "#/components/headers/ControlHeaders"
+        Cache-Control:
+          $ref: "#/components/headers/ControlHeaders"
+  parameters:
+    Authorization:
+      in: header
+      name: Authorization
+      description: Authorization token
+      required: true
+      schema:
+        type: string
+    xApiKey:
+      in: header
+      name: x-api-key
+      description: x-api-key
+      required: false
+      schema:
+        type: string
+    objectId:
+      in: path
+      name: id
+      description: The object id
+      required: true
+      schema:
+        type: string
+    shared:
+      in: query
+      name: shared
+      description: Is shared mode
+      schema:
+        type: boolean
+    sharingUid:
+      in: query
+      name: sharingUid
+      description: The sharing user uid
+      schema:
+        type: string
+  schemas:
+    Media:
+      type: object
+      required:
+        - name
+        - originalName
+      properties:
+        name:
+          type: string
+          description: The name
+        originalName:
+          type: string
+          description: The original name
+    ShareUser:
+      type: object
+      properties:
+        uid:
+          type: string
+          description: The uid
+        email:
+          type: string
+          description: The email
+    BasicObject:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The id
+        uid:
+          type: string
+          description: The user uid
+        modifiedAt:
+          type: string
+          format: date
+          description: The modified at
+        createdAt:
+          type: string
+          format: date
+          description: The created at
+        sharings:
+          type: array
+          description: The sharing users
+          items:
+            $ref: "#/components/schemas/ShareUser"
+    CommonObject:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status
+        notes:
+          type: string
+          description: The notes
+        medias:
+          type: array
+          description: List of medias
+          items:
+            $ref: "#/components/schemas/Media"
+        metadata:
+          type: array
+          description: The metadata
+          items:
+            type: object
+    ReponseObject:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          description: The status
+    AirTravelClearanceRequest:
+      allOf:
+        - $ref: "#/components/schemas/CommonObject"
+        - type: object
+          required:
+            - fullName
+            - clearenceType
+            - clearenceNumber
+            - renewalDate
+            - idLocation
+            - docLocation
+          properties:
+            fullName:
+              type: string
+              description: The name on air travel clearance
+            clearenceType:
+              type: string
+              description: The clearence type
+            clearenceNumber:
+              type: integer
+              format: int64
+              description: The clearence number
+            renewalDate:
+              type: string
+              description: The renewal date
+            idLocation:
+              type: string
+              description: From
+            docLocation:
+              type: string
+              description: The doc location
+    AirTravelClearance:
+      allOf:
+        - $ref: "#/components/schemas/AirTravelClearanceRequest"
+        - $ref: "#/components/schemas/BasicObject"
+    AirTravelClearanceResponses:
+      allOf:
+        - $ref: "#/components/schemas/ReponseObject"
+        - type: object
+          required:
+            - data
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "#/components/schemas/AirTravelClearance"
+    AirTravelClearanceResponse:
+      allOf:
+        - $ref: "#/components/schemas/ReponseObject"
+        - type: object
+          required:
+            - data
+          properties:
+            data:
+              $ref: "#/components/schemas/AirTravelClearance"
+    Error:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+      required:
+        - status
+        - message
+x-amazon-apigateway-binary-media-types:
+  - "multipart/form-data"
+x-aws-api-id: "e0le8wlr77"
